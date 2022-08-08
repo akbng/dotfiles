@@ -1,34 +1,24 @@
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-setopt autocd extendedglob nomatch
-bindkey -e
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-zstyle :compinstall filename '/home/ankan1006/.zshrc'
+export ZSH="$HOME/.oh-my-zsh"
+export CDPATH=".:$HOME:$HOME/web_dev"
+export NVM_COMPLETION=true
+export NVM_LAZY_LOAD=true
+export NVM_LAZY_LOAD_EXTRA_COMMANDS=('vim')
 
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
-fpath=($fpath "/home/ankan1006/.zfunctions")
+ZSH_THEME="spaceship"
+HYPHEN_INSENSITIVE="true"
 
-# Set Spaceship ZSH as a prompt
-autoload -U promptinit; promptinit
-prompt spaceship
+zstyle ':omz:update' mode reminder
+zstyle ':omz:update' frequency 7
 
-alias cls="clear"
-alias glg="git log \
-			--graph \
-			--pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) %an%Creset' \
-			--abbrev-commit"
+ENABLE_CORRECTION="true"
+COMPLETION_WAITING_DOTS="true"
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+plugins=(git zsh-nvm)
+
+source $ZSH/oh-my-zsh.sh
+
+#Custom aliases
 alias open="xdg-open"
 alias vscode="code -r ."
-
-export CDPATH=".:$HOME:/home/ankan1006/web_dev"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+alias pss="ps -aux | grep"
