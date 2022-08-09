@@ -11,4 +11,5 @@ Install ZSH on ubuntu - Follow Steps:
 7. Symlink spaceship.zsh-theme to your oh-my-zsh custom themes directory: `ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme" `
 8. (INSTALL) nvm through zsh-nvm.
    - Clone the repo: `git clone https://github.com/lukechilds/zsh-nvm ~/.oh-my-zsh/custom/plugins/zsh-nvm`
-9. clone the **.zshrc** file from the repo and move it to `$HOME/.zshrc`
+9. Clone the **.zshrc** file from the repo and move it to `$HOME/.zshrc`
+10. Change the default shell to zsh by running `chsh -s $(which zsh)`
