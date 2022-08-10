@@ -47,17 +47,17 @@ change_shell () {
         return 1
     fi
 
-        chsh -s $path_to_zshrc
+    chsh -s $path_to_zshrc
 }
 
 if [ "$SHELL" != "$path_to_zshrc" ]; then
-echo "Do you want to change your default shell to zsh?"
-select yn in "Yes" "No"; do
-    case $yn in 
-        Yes ) change_shell; break;;
-        No ) break;;
-    esac
-done
+    echo "Do you want to change your default shell to zsh?"
+    select yn in "Yes" "No"; do
+        case $yn in 
+            Yes ) change_shell; break;;
+            No ) break;;
+        esac
+    done
 fi
 
 install_omz () {
@@ -65,7 +65,7 @@ echo 'Installing Oh-My-Zsh...'
 sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" << EndOfCommand
 n
 EndOfCommand
-    
+
 #! Fail if the system doesn't reboot properly or logout and login
 # REASON: $ZSH_CUSTOM is not set
 # echo 'Installing spaceship prompt...'
@@ -127,13 +127,13 @@ fi
 if ! [ -x "$(command -v node)" ]
 then
     echo "Installing NodeJS..."
-echo "Do you wish to install LTS version of NodeJS?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) nvm install --lts; break;;
-        No ) nvm install node; break;;
-    esac
-done
+    echo "Do you wish to install LTS version of NodeJS?"
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) nvm install --lts; break;;
+            No ) nvm install node; break;;
+        esac
+    done
 else
     echo "NodeJS is already installed."
     echo 'Skipping NodeJS installation...'
@@ -176,14 +176,14 @@ fi
 if ! [ -d /usr/share/themes/gtk-master ]; then
     echo 'Downloading Dracula gtk theme...'
     $SUDO wget https://github.com/dracula/gtk/archive/master.zip -P /tmp/
-echo 'Extracting Dracula gtk theme to /usr/share/themes/...'
+    echo 'Extracting Dracula gtk theme to /usr/share/themes/...'
     $SUDO unzip -q /tmp/master.zip -d /usr/share/themes/
 fi
 
 if ! [ -d /usr/share/icons/Dracula ]; then
-echo 'Downloading Dracula Icon theme for gtk...'
+    echo 'Downloading Dracula Icon theme for gtk...'
     $SUDO wget https://github.com/dracula/gtk/files/5214870/Dracula.zip -P /tmp/
-echo 'Extracting Dracula Icon theme to /usr/share/icons/...'
+    echo 'Extracting Dracula Icon theme to /usr/share/icons/...'
     $SUDO unzip -q /tmp/Dracula.zip -d /usr/share/icons/
 fi
 
@@ -218,5 +218,12 @@ done
 
 echo 'Finished the setup procudure!'
 echo 'Your system might need to reboot for changes to take effect!'
-# TODO - Add a reboot prompt
 echo 'Please check your ~/.zshrc file in case of ERRORS!'
+
+while true; do
+    read -p "Restart now? [Y/N] " yn
+    case $yn in
+        [Yy]* ) $SUDO reboot; break;;
+        [Nn]* ) exit;;
+    esac
+done
