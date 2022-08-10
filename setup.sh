@@ -19,7 +19,7 @@ done
 echo 'Updating Repositories...'
 $SUDO apt update
 echo 'Upgrading System...'
-$SUDO apt upgrade -y
+$SUDO apt upgrade
 
 echo 'Installing Dependencies...'
 for DEPENDENCY in "${DEPENDENCIES[@]}"
