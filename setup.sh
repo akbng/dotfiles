@@ -3,6 +3,7 @@
 SUDO=''
 declare -a REPOS=('universe' 'multiverse' 'restricted')
 declare -a DEPENDENCIES=('git' 'build-essential' 'wget' 'curl' 'tmux' 'vim' 'htop' 'file' 'fonts-powerline' 'vlc' 'gnome-tweaks' 'zsh')
+declare -a SNAP_PACKAGES=('chromium' 'spotify' 'zoom' 'bitwarden')
 
 if [ "$EUID" -ne 0 ]; then
   SUDO='sudo'
@@ -141,12 +142,17 @@ $SUDO unzip -q Dracula.zip -d /usr/share/icons/
 # TODO: Customise the dock (center, no-extend, auto-hide) and set Dracula as the default theme
 
 echo 'Installing Snap packages...'
-echo 'Installing chromium...'
-$SUDO snap install chromium
-echo 'Installing VS Code...'
-$SUDO snap install code --classic
-echo 'Installing Bitwarden...'
-$SUDO snap install bitwarden
+for SNAP_PACKAGE in "${SNAP_PACKAGES[@]}"
+do
+    if ! [ -x "$(command -v $SNAP_PACKAGE ]
+    then
+        echo "Installing $SNAP_PACKAGE..."
+        $SUDO snap install $SNAP_PACKAGE
+    else
+        echo "$SNAP_PACKAGE is already installed."
+        echo 'Skipping...'
+    fi
+done
 
 echo 'Finished the setup procudure!'
 echo 'Your system might need to reboot for changes to take effect!'
