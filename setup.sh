@@ -37,6 +37,8 @@ if ! [ -x "$(command -v zsh)" ]; then
     $SUDO apt install zsh && $SUDO dpkg-reconfigure dash && $SUDO reboot
 fi
 
+path_to_zshrc="$(which zsh)"
+
 change_shell () {
     echo 'Changing shell to zsh...'
     if [ "$EUID" -eq 0 ]; then # If root, don't change shell
@@ -45,14 +47,10 @@ change_shell () {
         return 1
     fi
 
-    path_to_zshrc="$(which zsh)"
-    if [ "$SHELL" != "$path_to_zshrc" ]; then
         chsh -s $path_to_zshrc
-    else
-        echo 'Shell already set to zsh!'
-    fi
 }
 
+if [ "$SHELL" != "$path_to_zshrc" ]; then
 echo "Do you want to change your default shell to zsh?"
 select yn in "Yes" "No"; do
     case $yn in 
@@ -60,6 +58,7 @@ select yn in "Yes" "No"; do
         No ) break;;
     esac
 done
+fi
 
 install_omz () {
 echo 'Installing Oh-My-Zsh...'
@@ -67,9 +66,11 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 n
 EndOfCommand
     
-echo 'Installing spaceship prompt...'
-git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
-ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+#! Fail if the system doesn't reboot properly or logout and login
+# REASON: $ZSH_CUSTOM is not set
+# echo 'Installing spaceship prompt...'
+# git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
+# ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
     
 echo 'Installing zsh-nvm plugin...'
 git clone https://github.com/lukechilds/zsh-nvm "$HOME/oh-my-zsh/custom/plugins/zsh-nvm"
@@ -93,11 +94,12 @@ skip_omz () {
     echo 'Exporting Environment Variables...'
     echo 'export CDPATH=".:$HOME"' >> ~/.zshrc
     echo 'export EDITOR="vim"' >> ~/.zshrc
-    echo 'Installing ZSH manually...'
-    echo 'fpath=( "${ZDOTDIR:-$HOME}/.zfunctions" $fpath )' >> ~/.zshrc
-    ln -sf "$PWD/spaceship.zsh" "${ZDOTDIR:-$HOME}/.zfunctions/prompt_spaceship_setup"
-    echo 'autoload -U promptinit; promptinit' >> ~/.zshrc
-    echo 'prompt spaceship' >> ~/.zshrc
+    #! There is no .zfunctions/prompt_spaceshipt_setup
+    # echo 'Installing ZSH manually...'
+    # echo 'fpath=( "${ZDOTDIR:-$HOME}/.zfunctions" $fpath )' >> ~/.zshrc
+    # ln -sf "$PWD/spaceship.zsh" "${ZDOTDIR:-$HOME}/.zfunctions/prompt_spaceship_setup"
+    # echo 'autoload -U promptinit; promptinit' >> ~/.zshrc
+    # echo 'prompt spaceship' >> ~/.zshrc
     echo 'Finished editing ~/.zshrc'
     echo 'Please check your ~/.zshrc file in case of ERRORS!'
 }
