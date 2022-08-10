@@ -118,8 +118,15 @@ if ! [ -x "$(command -v nvm)" ]; then
     export NVM_DIR="$HOME/.nvm"
     [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
     [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+else
+    echo 'NVM is already installed.'
+    echo 'Skipping NVM installation...'
 fi
 
+
+if ! [ -x "$(command -v node)" ]
+then
+    echo "Installing NodeJS..."
 echo "Do you wish to install LTS version of NodeJS?"
 select yn in "Yes" "No"; do
     case $yn in
@@ -127,6 +134,10 @@ select yn in "Yes" "No"; do
         No ) nvm install node; break;;
     esac
 done
+else
+    echo "NodeJS is already installed."
+    echo 'Skipping NodeJS installation...'
+fi
 
 echo 'Downloading Dracula gtk theme...'
 wget https://github.com/dracula/gtk/archive/master.zip
