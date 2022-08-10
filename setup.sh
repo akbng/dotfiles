@@ -187,7 +187,21 @@ echo 'Extracting Dracula Icon theme to /usr/share/icons/...'
     $SUDO unzip -q /tmp/Dracula.zip -d /usr/share/icons/
 fi
 
-# TODO: Customise the dock (center, no-extend, auto-hide) and set Dracula as the default theme
+echo 'Customising the dock...'
+gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
+gsettings set org.gnome.shell.extensions.dash-to-dock dock-position BOTTOM
+gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 40
+gsettings set org.gnome.shell.extensions.dash-to-dock unity-backlit-items false
+gsettings set org.gnome.shell.extensions.dash-to-dock transparency-mode DYNAMIC
+
+echo 'Changing the DESKTOP theme to Dracula...'
+echo '[REMEMBER] You can always customize the theme manually using Gnome Tweaks.'
+gsettings set org.gnome.desktop.interface gtk-theme "Dracula"
+gsettings set org.gnome.desktop.wm.preferences theme "Dracula"
+
+echo 'Changing the ICON theme to Dracula...'
+gsettings set org.gnome.desktop.interface icon-theme "Dracula"
+
 
 echo 'Installing Snap packages...'
 for SNAP_PACKAGE in "${SNAP_PACKAGES[@]}"
