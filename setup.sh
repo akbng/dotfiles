@@ -152,6 +152,16 @@ fi
 echo 'Downloading Dracula gtk theme...'
 wget https://github.com/dracula/gtk/archive/master.zip
 
+if ! [ -x "$(command -v code)" ]
+then
+    echo 'Installing VSCode...'
+    wget https://go.microsoft.com/fwlink/?LinkID=760868 -O /tmp/code.deb
+    $SUDO dpkg -i /tmp/code.deb
+else
+    echo 'VSCode is already installed.'
+    echo 'Skipping VSCode installation...'
+fi
+
 echo 'Extracting Dracula gtk theme to /usr/share/themes/...'
 $SUDO unzip -q master.zip -d /usr/share/themes/
 $SUDO mv /usr/share/themes/master /usr/share/themes/Dracula
