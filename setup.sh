@@ -162,6 +162,19 @@ else
     echo 'Skipping VSCode installation...'
 fi
 
+if ! [ -x "$(command -v droidcam)" ]
+then
+    echo 'Installing Droidcam...'
+    $SUDO wget -O /tmp/droidcam_latest.zip https://files.dev47apps.net/linux/droidcam_1.8.2.zip
+    unzip /tmp/droidcam_latest.zip -d /tmp/droidcam
+    cd /tmp/droidcam/
+    $SUDO ./install-client
+    $SUDO ./install-video
+else
+    echo 'Droidcam is already installed!'
+    echo 'Skipping...'
+fi
+
 echo 'Extracting Dracula gtk theme to /usr/share/themes/...'
 $SUDO unzip -q master.zip -d /usr/share/themes/
 $SUDO mv /usr/share/themes/master /usr/share/themes/Dracula
