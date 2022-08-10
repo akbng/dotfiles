@@ -19,6 +19,7 @@ plugins=(git zsh-nvm)
 source $ZSH/oh-my-zsh.sh
 
 #Custom aliases
+alias cls="clear"
 alias open="xdg-open"
 alias vscode="code -r ."
 alias pss="ps -aux | grep"
