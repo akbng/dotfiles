@@ -149,8 +149,6 @@ else
     echo 'Yarn is already installed.'
     echo 'Skipping yarn installation...'
 fi
-echo 'Downloading Dracula gtk theme...'
-wget https://github.com/dracula/gtk/archive/master.zip
 
 if ! [ -x "$(command -v code)" ]
 then
@@ -175,15 +173,19 @@ else
     echo 'Skipping...'
 fi
 
+if ! [ -d /usr/share/themes/gtk-master ]; then
+    echo 'Downloading Dracula gtk theme...'
+    $SUDO wget https://github.com/dracula/gtk/archive/master.zip -P /tmp/
 echo 'Extracting Dracula gtk theme to /usr/share/themes/...'
-$SUDO unzip -q master.zip -d /usr/share/themes/
-$SUDO mv /usr/share/themes/master /usr/share/themes/Dracula
+    $SUDO unzip -q /tmp/master.zip -d /usr/share/themes/
+fi
 
+if ! [ -d /usr/share/icons/Dracula ]; then
 echo 'Downloading Dracula Icon theme for gtk...'
-wget https://github.com/dracula/gtk/files/5214870/Dracula.zip
-
+    $SUDO wget https://github.com/dracula/gtk/files/5214870/Dracula.zip -P /tmp/
 echo 'Extracting Dracula Icon theme to /usr/share/icons/...'
-$SUDO unzip -q Dracula.zip -d /usr/share/icons/
+    $SUDO unzip -q /tmp/Dracula.zip -d /usr/share/icons/
+fi
 
 # TODO: Customise the dock (center, no-extend, auto-hide) and set Dracula as the default theme
 
