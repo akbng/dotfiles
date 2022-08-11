@@ -31,7 +31,6 @@ do
     fi
 done
 
-# If zsh is not installed properly
 if ! [ -x "$(command -v zsh)" ]; then
     echo 'Installing ZSH separately...'
     $SUDO apt install zsh && $SUDO dpkg-reconfigure dash && $SUDO reboot
@@ -61,56 +60,25 @@ if [ "$SHELL" != "$path_to_zshrc" ]; then
 fi
 
 install_omz () {
-echo 'Installing Oh-My-Zsh...'
-sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" << EndOfCommand
-n
-EndOfCommand
+    echo 'Installing OH-MY-ZSH...'
+    -n | sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+        
+    echo 'Installing zsh-nvm plugin...'
+    git clone https://github.com/lukechilds/zsh-nvm "$HOME/oh-my-zsh/custom/plugins/zsh-nvm"
 
-#! Fail if the system doesn't reboot properly or logout and login
-# REASON: $ZSH_CUSTOM is not set
-# echo 'Installing spaceship prompt...'
-# git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
-# ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
-    
-echo 'Installing zsh-nvm plugin...'
-git clone https://github.com/lukechilds/zsh-nvm "$HOME/oh-my-zsh/custom/plugins/zsh-nvm"
-
-echo 'Copying zshrc...'
-cp -ub ./.zshrc ~
+    echo 'Copying zshrc...'
+    cp -ub ./.zshrc ~
 }
 
-skip_omz () {
-    echo 'Skipping Oh-My-Zsh...'
-    echo 'Adding custom aliases to ~/.zshrc ...'
-    echo 'alias ll="ls -l"' >> ~/.zshrc
-    echo 'alias la="ls -a"' >> ~/.zshrc
-    echo 'alias l="ls -CF"' >> ~/.zshrc
-    echo 'alias cls="clear"' >> ~/.zshrc
-    echo 'alias open="xdg-open"' >> ~/.zshrc
-    echo 'alias code="code -r"' >> ~/.zshrc
-    echo 'alias gss="git status -s"' >> ~/.zshrc
-    echo 'alias glg="git log --graph --pretty=format:'"'"'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue) %an%Creset'"'"' --abbrev-commit"' >> ~/.zshrc
-    echo 'alias glols="git log --graph --pretty='"'"'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset'"'"' --stat"' >> ~/.zshrc
-    echo 'Exporting Environment Variables...'
-    echo 'export CDPATH=".:$HOME"' >> ~/.zshrc
-    echo 'export EDITOR="vim"' >> ~/.zshrc
-    #! There is no .zfunctions/prompt_spaceshipt_setup
-    # echo 'Installing ZSH manually...'
-    # echo 'fpath=( "${ZDOTDIR:-$HOME}/.zfunctions" $fpath )' >> ~/.zshrc
-    # ln -sf "$PWD/spaceship.zsh" "${ZDOTDIR:-$HOME}/.zfunctions/prompt_spaceship_setup"
-    # echo 'autoload -U promptinit; promptinit' >> ~/.zshrc
-    # echo 'prompt spaceship' >> ~/.zshrc
-    echo 'Finished editing ~/.zshrc'
-    echo 'Please check your ~/.zshrc file in case of ERRORS!'
-}
-
-echo "Do you wish to install OH-MY-ZSH?"
-select yn in "Yes" "No"; do
-    case $yn in
-        Yes ) install_omz; break;;
-        No ) skip_omz; break;;
-    esac
-done
+if ! [ -d "$HOME/.oh-my-zsh" -o -x "$(command -v omz)" ]; then
+    echo "Do you wish to install OH-MY-ZSH?"
+    select yn in "Yes" "No"; do
+        case $yn in
+            Yes ) install_omz; break;;
+            No )  echo 'Skipping OH-MY-ZSH'; break;;
+        esac
+    done
+fi
 
 if ! [ -x "$(command -v nvm)" ]; then
     echo 'Installing nvm manually...'
