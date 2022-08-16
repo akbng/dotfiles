@@ -1,7 +1,7 @@
 #!/bin/bash
 
-setup_zshrc () {
-cat > $HOME/.zshrc << EOF
+setup_zshrc() {
+	cat >$HOME/.zshrc <<EOF
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
@@ -36,24 +36,48 @@ export NVM_DIR="$HOME/.nvm"
 EOF
 }
 
-init_zshrc () {
-    mkdir "${ZDOTDIR:-$HOME}/.zfunctions"
-    git clone https://github.com/spaceship-prompt/spaceship-prompt.git --depth=1
-    ln -sf "$PWD/spaceship-prompt/spaceship.zsh" "${ZDOTDIR:-$HOME}/.zfunctions/prompt_spaceship_setup"
-    echo "Setting up custom zshrc with spaceship prompt for user: $USER..."
-    setup_zshrc
+setup_vimrc() {
+	cat >$HOME/.vimrc <<EOF
+set nocompatible
+set backspace=indent,eol,start
+set autoindent
+set smartindent
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+set expandtab
+set number
+set ruler
+set showmatch
+set ignorecase
+set incsearch
+set hlsearch
+set laststatus=2
+set wildmenu
+set mouse=a
+EOF
 }
 
-if [ $ZSH -a $ZSH_CUSTOM ]
-then
-    echo "OH-MY-ZSH already installed and configured"
-    echo 'Installing spaceshipt Prompt (only)...'
-    git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
-    ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+init_zshrc() {
+	mkdir "${ZDOTDIR:-$HOME}/.zfunctions"
+	git clone https://github.com/spaceship-prompt/spaceship-prompt.git --depth=1
+	ln -sf "$PWD/spaceship-prompt/spaceship.zsh" "${ZDOTDIR:-$HOME}/.zfunctions/prompt_spaceship_setup"
+	echo "Setting up custom zshrc with spaceship prompt for user: $USER..."
+	setup_zshrc
+}
+
+if [ $ZSH -a $ZSH_CUSTOM ]; then
+	echo "OH-MY-ZSH already installed and configured"
+	echo 'Installing spaceshipt Prompt (only)...'
+	git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
+	ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
 else
-    echo "OH-MY-ZSH is not set..."
-    init_zshrc
+	echo "OH-MY-ZSH is not set..."
+	init_zshrc
 fi
+
+# TODO: setup vimrc, tmux config, samba server, ssh config, etc.
+# TODO: also setup gpg keyring, and configure git to use gpg keys.
 
 echo 'Finished Post Setup processes!'
 echo 'Please restart your terminal session to apply changes'
