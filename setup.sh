@@ -2,9 +2,10 @@
 
 SUDO=''
 declare -a REPOS=('universe' 'multiverse' 'restricted')
-declare -a DEPENDENCIES=('git' 'build-essential' 'wget' 'curl' 'tmux' 'vim' 'htop' 'file' 'fonts-powerline' 'vlc' 'gnome-tweaks' 'zsh')
-declare -a SNAP_PACKAGES=('chromium' 'spotify' 'zoom' 'bitwarden')
+declare -a DEPENDENCIES=('git' 'build-essential' 'wget' 'curl' 'tmux' 'bashtop' 'fonts-powerline' 'vlc' 'gnome-tweaks' 'zsh')
+declare -a SNAP_PACKAGES=('spotify' 'zoom' 'bitwarden')
 
+# NOTE: if there's no root priviledge set sudo active
 if [ "$EUID" -ne 0 ]; then
 	SUDO='sudo'
 fi
@@ -38,7 +39,7 @@ path_to_zshrc="$(which zsh)"
 
 change_shell() {
 	echo 'Changing shell to zsh...'
-	if [ "$EUID" -eq 0 ]; then # If root, don't change shell
+	if [ "$EUID" -eq 0 ]; then # INFO: If root, don't change shell
 		echo 'Script is running as root. Skipping shell change.'
 		echo 'Skipping...'
 		return 1
@@ -137,18 +138,6 @@ else
 	echo 'Skipping VSCode installation...'
 fi
 
-if ! [ -x "$(command -v droidcam)" ]; then
-	echo 'Installing Droidcam...'
-	$SUDO wget -O /tmp/droidcam_latest.zip https://files.dev47apps.net/linux/droidcam_1.8.2.zip
-	unzip /tmp/droidcam_latest.zip -d /tmp/droidcam
-	cd /tmp/droidcam/
-	$SUDO ./install-client
-	$SUDO ./install-video
-else
-	echo 'Droidcam is already installed!'
-	echo 'Skipping...'
-fi
-
 if ! [ -d /usr/share/themes/gtk-master ]; then
 	echo 'Downloading Dracula gtk theme...'
 	$SUDO wget https://github.com/dracula/gtk/archive/master.zip -P /tmp/
@@ -189,7 +178,7 @@ for SNAP_PACKAGE in "${SNAP_PACKAGES[@]}"; do
 	fi
 done
 
-echo 'Finished the setup procudure!'
+echo 'Finished the setup procedure!'
 echo 'Your system might need to reboot for changes to take effect!'
 echo 'Please check your ~/.zshrc file in case of ERRORS!'
 
