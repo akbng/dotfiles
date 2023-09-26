@@ -1,0 +1,6 @@
+.git
+misc
+LICENSE
+README.md
+^/.*\.org
+bin
