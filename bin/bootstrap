@@ -43,6 +43,7 @@ curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 mkdir -p ~/.local/bin
 sudo ln -s ~/.local/kitty.app/bin/kitty /usr/bin/kitty
 sudo ln -s ~/.local/kitty.app/bin/kitten /usr/bin/kitten
+sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/bin/kitty 50
 echo 'Kitty terminal installed successfully'
 
 # TODO: write a bin to update nerd-fonts
