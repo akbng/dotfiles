@@ -148,7 +148,7 @@ if ! [ -d "$themes_dir/gtk-master" -o -d "$themes_dir/Dracula" ]; then
     $SUDO wget https://github.com/dracula/gtk/archive/master.zip -P /tmp/
     echo "Extracting Dracula gtk theme to $themes_dir..."
     $SUDO unzip -q /tmp/master.zip -d "$themes_dir/"
-    $SUDO mv "$theme_dir/gtk-master" "$themes_dir/Dracula"
+    $SUDO mv "$themes_dir/gtk-master" "$themes_dir/Dracula"
 fi
 
 icons_dir="/usr/share/icons"
