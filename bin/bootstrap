@@ -3,7 +3,7 @@
 SUDO=''
 declare -a REPOS=('universe' 'multiverse' 'restricted' 'ppa:neovim-ppa/unstable')
 declare -a DEPENDENCIES=('git' 'gh' 'neovim' 'build-essential' 'bashtop' 'wget' 'curl' 'clang' 'cmake' 'tmux' 'file' 'fd-find' 'rip-grep' 'grep' 'fonts-powerline' 'vlc' 'python3' 'stow'  'gnome-tweaks' 'zsh')
-declare -a SNAP_PACKAGES=('spotify' 'zoom' 'bitwarden')
+declare -a SNAP_PACKAGES=('spotify' 'bitwarden')
 
 if [ "$EUID" -ne 0 ]; then
   SUDO='sudo'
@@ -41,8 +41,8 @@ fi
 echo 'Installing Kitty terminal...'
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 mkdir -p ~/.local/bin
-ln -s ~/.local/kitty.app/bin/kitty ~/.local/bin/kitty
-ln -s ~/.local/kitty.app/bin/kitten ~/.local/bin/kitten
+sudo ln -s ~/.local/kitty.app/bin/kitty /usr/bin/kitty
+sudo ln -s ~/.local/kitty.app/bin/kitten /usr/bin/kitten
 echo 'Kitty terminal installed successfully'
 
 # TODO: write a bin to update nerd-fonts
