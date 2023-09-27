@@ -2,7 +2,7 @@
 
 SUDO=''
 declare -a REPOS=('universe' 'multiverse' 'restricted' 'ppa:neovim-ppa/unstable')
-declare -a DEPENDENCIES=('git' 'gh' 'neovim' 'build-essential' 'bashtop' 'wget' 'curl' 'clang' 'cmake' 'tmux' 'htop' 'file' 'fd-find' 'rip-grep' 'grep' 'fonts-powerline' 'vlc' 'python3' 'stow'  'gnome-tweaks' 'zsh')
+declare -a DEPENDENCIES=('git' 'gh' 'neovim' 'build-essential' 'bashtop' 'wget' 'curl' 'clang' 'cmake' 'tmux' 'file' 'fd-find' 'rip-grep' 'grep' 'fonts-powerline' 'vlc' 'python3' 'stow'  'gnome-tweaks' 'zsh')
 declare -a SNAP_PACKAGES=('spotify' 'zoom' 'bitwarden')
 
 if [ "$EUID" -ne 0 ]; then
@@ -31,7 +31,7 @@ do
     fi
 done
 
-if [ -x "$(command -v nvim)"]; then
+if [ -x "$(command -v nvim)" ]; then
   echo 'Setting up NvChad for Neovim...'
   git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim > /dev/null 2>&1
   echo 'NvChad Setup Successfull'
@@ -41,9 +41,11 @@ fi
 echo 'Installing Kitty terminal...'
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
 if [ -x "$(command -v stow)" ]; then
-  stow -d ~/.local/kitty.app/bin -t /etc/bin 
+  stow -d ~/.local/kitty.app/bin -t /usr/bin
 else
-  ln -s ~/.local/kitty.app/bin ~/.local/bin
+  mkdir -p ~/.local/bin
+  ln -s ~/.local/kitty.app/bin/kitty ~/.local/bin/kitty
+  ln -s ~/.local/kitty.app/bin/kitten ~/.local/bin/kitten
 fi
 echo 'Kitty terminal installed successfully'
 
@@ -84,10 +86,11 @@ fi
 
 install_omz () {
     echo 'Installing OH-MY-ZSH...'
-    -n | sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-        
+    sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     echo 'Installing zsh-nvm plugin...'
     git clone https://github.com/lukechilds/zsh-nvm "$HOME/oh-my-zsh/custom/plugins/zsh-nvm"
+    echo 'Installing powerlevel10k...'
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 }
 
 if ! [ -d "$HOME/.oh-my-zsh" -o -x "$(command -v omz)" ]; then
@@ -127,16 +130,7 @@ else
     echo 'Skipping NodeJS installation...'
 fi
 
-if ! [ -x "$(command -v yarn)" ]
-then
-    echo 'Installing yarn...'
-    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-    sudo apt update && sudo apt install yarn > /dev/null 2>&1
-else
-    echo 'Yarn is already installed.'
-    echo 'Skipping yarn installation...'
-fi
+# TODO: Install yarn with current instructions
 
 if ! [ -x "$(command -v code)" ]
 then
@@ -175,16 +169,14 @@ gsettings set org.gnome.desktop.interface gtk-theme "Dracula"
 gsettings set org.gnome.desktop.wm.preferences theme "Dracula"
 
 echo 'Installing Snap packages...'
-for SNAP_PACKAGE in "${SNAP_PACKAGES[@]}"
-do
-    if ! [ -x "$(command -v $SNAP_PACKAGE ]
-    then
-        echo "Installing $SNAP_PACKAGE..."
-        $SUDO snap install $SNAP_PACKAGE
-    else
-        echo "$SNAP_PACKAGE is already installed."
-        echo 'Skipping...'
-    fi
+for SNAP_PACKAGE in "${SNAP_PACKAGES[@]}"; do
+  if ! [ -x "$(command -v $SNAP_PACKAGE)" ]; then
+      echo "Installing $SNAP_PACKAGE..."
+      $SUDO snap install $SNAP_PACKAGE
+  else
+      echo "$SNAP_PACKAGE is already installed."
+      echo 'Skipping...'
+  fi
 done
 
 echo 'sym linking dotfiles for nvim, kitty, zsh'
