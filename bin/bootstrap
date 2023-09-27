@@ -33,20 +33,16 @@ done
 
 if [ -x "$(command -v nvim)" ]; then
   echo 'Setting up NvChad for Neovim...'
-  git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 && nvim > /dev/null 2>&1
+  git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
   echo 'NvChad Setup Successfull'
 fi
 
 # TODO: write a bin to update kitty and setup a cron job for that
 echo 'Installing Kitty terminal...'
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
-if [ -x "$(command -v stow)" ]; then
-  stow -d ~/.local/kitty.app/bin -t /usr/bin
-else
-  mkdir -p ~/.local/bin
-  ln -s ~/.local/kitty.app/bin/kitty ~/.local/bin/kitty
-  ln -s ~/.local/kitty.app/bin/kitten ~/.local/bin/kitten
-fi
+mkdir -p ~/.local/bin
+ln -s ~/.local/kitty.app/bin/kitty ~/.local/bin/kitty
+ln -s ~/.local/kitty.app/bin/kitten ~/.local/bin/kitten
 echo 'Kitty terminal installed successfully'
 
 # TODO: write a bin to update nerd-fonts
@@ -180,7 +176,8 @@ for SNAP_PACKAGE in "${SNAP_PACKAGES[@]}"; do
 done
 
 echo 'sym linking dotfiles for nvim, kitty, zsh'
-stow -d . -t ~
+cp ~/.zshrc ~/.zshrc.bak # Back up current zshrc file
+stow .
 
 echo 'Finished the setup procudure!'
 echo 'Your system might need to reboot for changes to take effect!'
