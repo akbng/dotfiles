@@ -7,3 +7,4 @@
 -- })
 
 vim.opt.clipboard = ""
+vim.g.maplocalleader = ","

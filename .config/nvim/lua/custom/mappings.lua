@@ -4,10 +4,18 @@ local M = {}
 M.general = {
   n = {
     [";"] = { ":", "enter command mode", opts = { nowait = true } },
+    -- overwrites
     ["y"] = { '"+y', "yank with system clipboard" },
+    ["<C-w>>"] = { "5<C-w>>", "grow window width by 5" },
+    ["<C-w><"] = { "5<C-w><", "shrink window width by 5" },
+    ["<C-w>+"] = { "5<C-w>+", "grow window height by 5" },
+    ["<C-w>-"] = { "5<C-w>-", "shrink window height by 5" },
+  },
+  i = {
+    ["<C-BS>"] = { "<Esc>cvb", "delete previous word" },
   },
   v = {
-    ["y"] = { '"+y', "yank with system clipboard" },
+    ["y"] = { '"+ygv<Esc>', "yank with system clipboard" },
   },
 }
 
@@ -17,6 +25,27 @@ M.noice = {
   },
   i = {
     ["<M-q>"] = { "<cmd> NoiceDismiss <cr>", "Dismiss all the stacked notification blocking the view" },
+  },
+}
+
+M.chatGPT = {
+  n = {
+    ["<leader>cg"] = { "<cmd> ChatGPT <cr>", "Open ChatGPT" },
+    ["<leader>ca"] = { "<cmd> ChatGPTActAs <cr>", "Open ChatGPT prompt with select role" },
+    ["<leader>ce"] = { "<cmd> ChatGPTRun explain_code <cr>", "Open ChatGPT for code editing" },
+  },
+  v = {
+    ["<leader>ce"] = { "<cmd> ChatGPTRun explain_code <cr>", "Open ChatGPT for code editing" },
+  },
+}
+
+M.icon_picker = {
+  n = {
+    ["<leader>fi"] = { "<cmd> IconPickerNormal <cr>", "Open icon picker" },
+    ["<leader>fp"] = { "<cmd> IconPickerYank <cr>", "Open icon picker to yank" },
+  },
+  i = {
+    ["<C-i>"] = { "<cmd> IconPickerInsert <cr>", "Open icon picker in insert mode" },
   },
 }
 
@@ -155,6 +184,11 @@ M.trouble = {
     ["<leader>tx"] = {
       "<cmd> TroubleClose <cr>",
       "Close trouble windows (if any)",
+      { silent = true, noremap = true },
+    },
+    ["<leader>tt"] = {
+      "<cmd> TroubleToggle <cr>",
+      "Toggle Trouble",
       { silent = true, noremap = true },
     },
     ["gR"] = {

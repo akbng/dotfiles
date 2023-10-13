@@ -90,9 +90,7 @@ local plugins = {
   {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons", "folke/lsp-colors.nvim" },
-    keys = {
-      { "<leader>tt", "<cmd> TroubleToggle <cr>", desc = "Toggle Trouble" },
-    },
+    cmd = { "TroubleToggle", "TroubleClose" },
   },
 
   {
@@ -267,6 +265,28 @@ local plugins = {
       local home_dir = vim.fn.expand "$HOME"
       require("chatgpt").setup {
         api_key_cmd = "gpg --decrypt " .. home_dir .. "/openai.txt.gpg",
+      }
+    end,
+  },
+
+  {
+    "m4xshen/smartcolumn.nvim",
+    event = "BufEnter",
+    opts = {
+      colorcolumn = "100",
+      disabled_filetypes = { "NvimTree", "lazy", "mason", "help", "norg" },
+      custom_colorcolumn = { ruby = "120", java = { "180", "200" } },
+      scope = "line",
+    },
+  },
+
+  {
+    "ziontee113/icon-picker.nvim",
+    dependencies = "stevearc/dressing.nvim",
+    cmd = { "IconPickerNormal", "IconPickerInsert", "IconPickerYank" },
+    config = function()
+      require("icon-picker").setup {
+        disable_legacy_commands = true,
       }
     end,
   },
