@@ -25,6 +25,16 @@ local opts = {
     ["core.concealer"] = {
       config = {
         icon_preset = "basic",
+        icons = {
+          heading = {
+            icons = { "󰪥", "󰺕", "⦿", "", "ﰕ", "󰻂" }, -- load nerd-fonts icons
+          },
+          todo = {
+            cancelled = { icon = "󰜺" },
+            uncertain = { icon = "" },
+            urgent = { icon = "" },
+          },
+        },
       },
     }, -- Adds pretty icons to your documents
     ["core.dirman"] = { -- Manages Neorg workspaces
