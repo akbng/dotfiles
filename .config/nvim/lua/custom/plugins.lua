@@ -82,9 +82,7 @@ local plugins = {
   {
     "max397574/better-escape.nvim",
     event = "InsertEnter",
-    config = function()
-      require("better_escape").setup()
-    end,
+    opts = {},
   },
 
   {
@@ -166,16 +164,7 @@ local plugins = {
       "nvim-telescope/telescope.nvim",
       -- NOTE: Make sure that ripgrep is installed on the system
     },
-    opts = {
-      colors = {
-        default = { "#b998f4" },
-        warning = { "#e0af68" },
-        info = { "#0db9d7" },
-        hint = { "#10b981" },
-        error = { "#db4b4b" },
-        test = { "#f4b8e4" },
-      },
-    },
+    opts = {},
   },
 
   {
@@ -189,12 +178,10 @@ local plugins = {
 
   {
     "barrett-ruth/live-server.nvim",
-    config = function(_, opts)
-      require("live-server").setup(opts)
-    end,
+    opts = {},
     keys = {
       { "<leader>lo", "<cmd> LiveServerStart <cr>", desc = "Start the live server" },
-      { "<leader>lc", "<cmd> LiveServerStop <cr>", desc = "Stop the live server" },
+      { "<leader>lx", "<cmd> LiveServerStop <cr>", desc = "Stop the live server" },
     },
   },
 
@@ -214,9 +201,7 @@ local plugins = {
     init = function()
       vim.o.undofile = true
     end,
-    config = function(_, opts)
-      require("fundo").setup(opts)
-    end,
+    opts = {},
   },
 
   {
@@ -246,8 +231,15 @@ local plugins = {
   {
     "nvim-neorg/neorg",
     build = ":Neorg sync-parsers",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "laher/neorg-exec",
+      "nvim-neorg/neorg-telescope",
+      "folke/zen-mode.nvim",
+      { "pysan3/neorg-templates", dependencies = { "L3MON4D3/LuaSnip" } },
+    },
     cmd = { "Neorg" },
+    ft = { "norg" },
     config = function()
       require "custom.configs.neorg-config"
     end,
@@ -255,7 +247,13 @@ local plugins = {
 
   {
     "jackMort/ChatGPT.nvim",
-    cmd = { "ChatGPT", "ChatGPTActAs", "ChatGPTCompleteCode", "ChatGPTEditWithInstructions", "ChatGPTRun" },
+    cmd = {
+      "ChatGPT",
+      "ChatGPTActAs",
+      "ChatGPTCompleteCode",
+      "ChatGPTEditWithInstructions",
+      "ChatGPTRun",
+    },
     dependencies = {
       "MunifTanjim/nui.nvim",
       "nvim-lua/plenary.nvim",
@@ -274,7 +272,18 @@ local plugins = {
     event = "BufEnter",
     opts = {
       colorcolumn = "100",
-      disabled_filetypes = { "NvimTree", "lazy", "mason", "help", "norg" },
+      disabled_filetypes = {
+        "NvimTree",
+        "lazy",
+        "mason",
+        "help",
+        "norg",
+        "markdown",
+        "text",
+        "nvdash",
+        "noice",
+        "octo",
+      },
       custom_colorcolumn = { ruby = "120", java = { "180", "200" } },
       scope = "line",
     },
@@ -296,6 +305,31 @@ local plugins = {
     event = "VeryLazy",
     opts = {},
   },
+
+  {
+    "folke/zen-mode.nvim",
+    cmd = "ZenMode",
+    opts = {
+      window = {
+        backdrop = 0.8,
+        width = 0.85,
+        options = { colorcolumn = "0" },
+      },
+    },
+  },
+
+  {
+    "pwntester/octo.nvim",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim",
+      "nvim-tree/nvim-web-devicons",
+    },
+    cmd = "Octo",
+    opts = {},
+  },
+
+  -- TODO: Install and configure dap (Debugger UI)
 }
 
 return plugins

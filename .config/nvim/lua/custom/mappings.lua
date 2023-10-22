@@ -6,6 +6,7 @@ M.general = {
     [";"] = { ":", "enter command mode", opts = { nowait = true } },
     -- overwrites
     ["y"] = { '"+y', "yank with system clipboard" },
+    ["<leader>rf"] = { "<cmd> e! <cr>", "reload current file" },
     ["<C-w>>"] = { "5<C-w>>", "grow window width by 5" },
     ["<C-w><"] = { "5<C-w><", "shrink window width by 5" },
     ["<C-w>+"] = { "5<C-w>+", "grow window height by 5" },
@@ -31,18 +32,18 @@ M.noice = {
 M.chatGPT = {
   n = {
     ["<leader>cg"] = { "<cmd> ChatGPT <cr>", "Open ChatGPT" },
-    ["<leader>ca"] = { "<cmd> ChatGPTActAs <cr>", "Open ChatGPT prompt with select role" },
-    ["<leader>ce"] = { "<cmd> ChatGPTRun explain_code <cr>", "Open ChatGPT for code editing" },
+    ["<leader>cr"] = { "<cmd> ChatGPTActAs <cr>", "Open ChatGPT prompt with select role" },
+    ["<leader>ce"] = { "<cmd> ChatGPTRun explain_code <cr>", "Explain the codebase" },
   },
   v = {
-    ["<leader>ce"] = { "<cmd> ChatGPTRun explain_code <cr>", "Open ChatGPT for code editing" },
+    ["<leader>ce"] = { "<cmd> ChatGPTRun explain_code <cr>", "Explain the selected block of code" },
   },
 }
 
 M.icon_picker = {
   n = {
     ["<leader>fi"] = { "<cmd> IconPickerNormal <cr>", "Open icon picker" },
-    ["<leader>fp"] = { "<cmd> IconPickerYank <cr>", "Open icon picker to yank" },
+    ["<leader>fy"] = { "<cmd> IconPickerYank <cr>", "Open icon picker to yank" },
   },
   i = {
     ["<C-i>"] = { "<cmd> IconPickerInsert <cr>", "Open icon picker in insert mode" },

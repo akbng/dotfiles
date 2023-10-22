@@ -14,6 +14,7 @@ M.treesitter = {
     "markdown_inline",
     "bash",
     "regex",
+    "dart",
   },
   indent = {
     enable = true,
@@ -118,6 +119,7 @@ M.mason = {
     "deno",
     "prettierd",
     "eslint_d",
+    "tailwindcss",
 
     -- c/cpp stuff
     "clangd",
