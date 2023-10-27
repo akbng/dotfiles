@@ -7,6 +7,11 @@ end
 local opts = {
   load = {
     ["core.export"] = {},
+    ["core.export.markdown"] = {
+      config = {
+        extensions = "all",
+      },
+    },
     ["core.summary"] = {},
     ["core.journal"] = {
       config = {
@@ -70,6 +75,7 @@ local opts = {
           perm = "~/neo-zettel/permanent",
           literature = "~/neo-zettel/literature",
           articles = "~/neo-zettel/articles",
+          project = "~/neo-zettel/projects",
         },
         default_workspace = "fleet",
       },

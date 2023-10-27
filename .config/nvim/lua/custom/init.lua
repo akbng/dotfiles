@@ -6,5 +6,6 @@
 --   command = "tabdo wincmd =",
 -- })
 
+vim.o.wrap = false
 vim.opt.clipboard = ""
 vim.g.maplocalleader = ","
