@@ -17,14 +17,18 @@ local sources = {
 	fmt.dart_format,
 	-- c, cpp, cs(c#), java, cuda, proto
 	fmt.clang_format,
+	-- shell
+	fmt.shfmt,
 	-- linters
 	diag.eslint_d,
 	diag.alex.with({
 		extra_filetypes = { "norg" },
 	}),
+	diag.shellcheck,
 	-- code actions
 	ca.gitsigns,
 	ca.eslint_d,
+	ca.shellcheck,
 }
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
