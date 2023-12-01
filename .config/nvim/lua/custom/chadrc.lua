@@ -30,6 +30,15 @@ M.ui = {
   },
   nvdash = {
     load_on_startup = true,
+    header = require("custom.utils.logo")["random"],
+    buttons = {
+      { "  Saved Session", "Spc y s", "lua MiniSessions.select('read')" },
+      { "  Find File", "Spc f f", "Telescope find_files" },
+      { "󰈚  Recent Files", "Spc f o", "Telescope oldfiles" },
+      { "󰈭  Find Word", "Spc f w", "Telescope live_grep" },
+      { "  Themes", "Spc t h", "Telescope themes" },
+      { "  Mappings", "Spc c h", "NvCheatsheet" },
+    },
   },
   extended_integrations = { "trouble", "notify", "rainbowdelimiters", "todo", "codeactionmenu" },
 }
