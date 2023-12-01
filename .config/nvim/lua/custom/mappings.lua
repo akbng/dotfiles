@@ -20,6 +20,12 @@ M.general = {
   },
 }
 
+M.zen_mode = {
+  n = {
+    ["<leader>tz"] = { "<cmd> ZenMode <cr>", "Toggle Zen Mode" },
+  },
+}
+
 M.noice = {
   n = {
     ["<M-q>"] = { "<cmd> NoiceDismiss <cr>", "Dismiss all the stacked notification blocking the view" },
@@ -46,7 +52,7 @@ M.icon_picker = {
     ["<leader>fy"] = { "<cmd> IconPickerYank <cr>", "Open icon picker to yank" },
   },
   i = {
-    ["<C-i>"] = { "<cmd> IconPickerInsert <cr>", "Open icon picker in insert mode" },
+    ["<C-i>"] = { "<cmd> IconPickerInsert emoji <cr>", "Open icon picker in insert mode" },
   },
 }
 
