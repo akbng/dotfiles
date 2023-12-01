@@ -122,3 +122,5 @@ export LANG=en_US.UTF-8
 source $(dirname $(gem which colorls))/tab_complete.sh
 # load zoxide
 eval "$(zoxide init zsh)"
+# load flutter tab completion
+eval "$(flutter zsh-completion)"
