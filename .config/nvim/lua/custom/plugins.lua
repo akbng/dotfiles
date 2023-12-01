@@ -29,9 +29,7 @@ local plugins = {
 
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = {
-      "nvim-telescope/telescope-media-files.nvim",
-    },
+    dependencies = { "nvim-telescope/telescope-media-files.nvim" },
     opts = overrides.telescope,
   },
 
@@ -46,6 +44,14 @@ local plugins = {
     event = "BufEnter",
     opts = overrides.treesitter_textobjects,
     config = function(_, opts)
+      local parser = require("nvim-treesitter.parsers").get_parser_configs()
+      parser.dart = {
+        install_info = {
+          url = "https://github.com/UserNobody14/tree-sitter-dart",
+          files = { "src/parser.c", "src/scanner.c" },
+          revision = "8aa8ab977647da2d4dcfb8c4726341bee26fbce4", -- The last commit before the snail speed
+        },
+      }
       require("nvim-treesitter.configs").setup(opts)
     end,
   },
@@ -268,28 +274,6 @@ local plugins = {
   },
 
   {
-    "m4xshen/smartcolumn.nvim",
-    event = "BufEnter",
-    opts = {
-      colorcolumn = "100",
-      disabled_filetypes = {
-        "NvimTree",
-        "lazy",
-        "mason",
-        "help",
-        "norg",
-        "markdown",
-        "text",
-        "nvdash",
-        "noice",
-        "octo",
-      },
-      custom_colorcolumn = { ruby = "120", java = { "180", "200" } },
-      scope = "line",
-    },
-  },
-
-  {
     "ziontee113/icon-picker.nvim",
     dependencies = "stevearc/dressing.nvim",
     cmd = { "IconPickerNormal", "IconPickerInsert", "IconPickerYank" },
@@ -339,6 +323,22 @@ local plugins = {
     ft = { "markdown" },
   },
 
+  {
+    "3rd/image.nvim",
+    opts = {},
+    ft = { "norg", "markdown" },
+  },
+
+  {
+    "antosha417/nvim-lsp-file-operations",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-tree.lua",
+    },
+    config = function()
+      require("lsp-file-operations").setup()
+    end,
+  },
   -- TODO: Install and configure dap (Debugger UI)
 }
 
