@@ -1,5 +1,9 @@
 require("mini.surround").setup()
-require("mini.animate").setup()
+require("mini.animate").setup {
+  scroll = {
+    enable = false,
+  },
+}
 require("mini.bufremove").setup()
 require("mini.sessions").setup()
 

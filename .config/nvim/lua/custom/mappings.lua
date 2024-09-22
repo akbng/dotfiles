@@ -11,12 +11,24 @@ M.general = {
     ["<C-w><"] = { "5<C-w><", "shrink window width by 5" },
     ["<C-w>+"] = { "5<C-w>+", "grow window height by 5" },
     ["<C-w>-"] = { "5<C-w>-", "shrink window height by 5" },
+    ["<C-u>"] = { "<C-u>zz", "Scroll up and center current line" },
+    ["<C-d>"] = { "<C-d>zz", "Scroll down and center current line" },
   },
   i = {
     ["<C-BS>"] = { "<Esc>cvb", "delete previous word" },
   },
   v = {
     ["y"] = { '"+ygv<Esc>', "yank with system clipboard" },
+  },
+}
+
+M.flutter = {
+  n = {
+    ["<leader>fr"] = { "<cmd> FlutterRun <cr>", "Flutter Run" },
+    ["<leader>fR"] = { "<cmd> FlutterRestart <cr>", "Flutter Restart" },
+    ["<leader>fq"] = { "<cmd> FlutterQuit <cr>", "Flutter Quit" },
+    ["<leader>fx"] = { "<cmd> FlutterLogClear <cr>", "Flutter Clear Logs" },
+    ["<leader>fd"] = { "<cmd> FlutterDevices <cr>", "Flutter Devices" },
   },
 }
 
@@ -169,37 +181,34 @@ M.codeium = {
 M.trouble = {
   n = {
     ["<leader>td"] = {
-      "<cmd> TroubleToggle document_diagnostics <cr>",
+      "<cmd> Trouble diagnostics toggle filter.buf=0 focus=true <cr>",
       "Toggle the document diagnostics",
       { silent = true, noremap = true },
     },
     ["<leader>tw"] = {
-      "<cmd> TroubleToggle workspace_diagnostics <cr>",
+      "<cmd> Trouble diagnostics toggle <cr>",
       "Toggle the workspace diagnostics",
       { silent = true, noremap = true },
     },
     ["<leader>tl"] = {
-      "<cmd> TroubleToggle loclist <cr>",
+      "<cmd> Trouble loclist toggle <cr>",
       "Toggle loclist window",
       { silent = true, noremap = true },
     },
     ["<leader>tf"] = {
-      "<cmd> TroubleToggle quickfix <cr>",
+      "<cmd> Trouble qflist <cr>",
       "Toggle the quickfix window",
       { silent = true, noremap = true },
     },
     ["<leader>tx"] = {
-      "<cmd> TroubleClose <cr>",
+      function (opts)
+        require("trouble").close(opts)
+      end,
       "Close trouble windows (if any)",
       { silent = true, noremap = true },
     },
-    ["<leader>tt"] = {
-      "<cmd> TroubleToggle <cr>",
-      "Toggle Trouble",
-      { silent = true, noremap = true },
-    },
     ["gR"] = {
-      "<cmd> TroubleToggle lsp_references <cr>",
+      "<cmd> Trouble lsp_references toggle <cr>",
       "Toggle lsp references",
       { silent = true, noremap = true },
     },

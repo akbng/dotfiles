@@ -9,7 +9,7 @@ local plugins = {
     dependencies = {
       -- format & linting
       {
-        "nvimtools/none-ls.nvim",
+        "nvimtools/none-ls-extras.nvim",
         config = function()
           require "custom.configs.null-ls"
         end,
@@ -94,7 +94,8 @@ local plugins = {
   {
     "folke/trouble.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons", "folke/lsp-colors.nvim" },
-    cmd = { "TroubleToggle", "TroubleClose" },
+    cmd = "Trouble",
+    opts = {}
   },
 
   {
@@ -185,9 +186,10 @@ local plugins = {
   {
     "barrett-ruth/live-server.nvim",
     opts = {},
+    cmd = {"LiveServerStart", "LiveServerStop"},
     keys = {
       { "<leader>lo", "<cmd> LiveServerStart <cr>", desc = "Start the live server" },
-      { "<leader>lx", "<cmd> LiveServerStop <cr>", desc = "Stop the live server" },
+      { "<leader>lx", "<cmd> LiveServerStop <cr>",  desc = "Stop the live server" },
     },
   },
 
@@ -323,11 +325,11 @@ local plugins = {
     ft = { "markdown" },
   },
 
-  {
-    "3rd/image.nvim",
-    opts = {},
-    ft = { "norg", "markdown" },
-  },
+  -- {
+  --   "3rd/image.nvim",
+  --   opts = {},
+  --   ft = { "norg", "markdown" },
+  -- },
 
   {
     "antosha417/nvim-lsp-file-operations",

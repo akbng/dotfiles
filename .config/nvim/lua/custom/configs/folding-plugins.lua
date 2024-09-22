@@ -49,7 +49,10 @@ local opts = {
     end
     return { "lsp", "indent" }
   end,
-  close_fold_kinds = { "imports" },
+  close_fold_kinds_for_ft = {
+    default = { 'imports', 'comment' },
+    json = { "array" }
+  },
   open_fold_hl_timeout = 150,
   fold_virt_text_handler = foldTextFormatter,
 }
