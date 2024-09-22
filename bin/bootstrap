@@ -46,7 +46,7 @@ fi
 
 if [ -x "$(command -v nvim)" ]; then
 	echo 'Setting up NvChad for Neovim...'
-	git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+	git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1 -b v2.0
 	echo 'NvChad Setup Successfull'
 fi
 
