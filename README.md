@@ -1,4 +1,4 @@
-# dotfiles
+# DOTFILES
 
 ## Install ZSH on ubuntu - Follow Steps:
 
@@ -27,5 +27,16 @@
    - `git config --global commit.gpgsign true`
    - `git config --global user.signingkey <keyid>` (replace <keyid> with the key id) <br>
      Example: `git config --global user.signingkey 4A08EDDA28552B0D`
-9. Now export GPG\*TTY to the environment variable: `export GPG_TTY=$(tty)` in the \*\*\_zshrc**\* or **_bashrc_\*\* file.
+9. Now export GPG_TTY to the environment variable: `export GPG_TTY=$(tty)` in the **.zshrc**  or **.bashrc**  file.
 10. Now all the commits from the terminal will be signed with gpg by default. For more info or troubleshooting see [GitHub Managing commit signature verification](https://docs.github.com/en/authentication/managing-commit-signature-verification).
+
+## List Gnome Extensions installed on my system
+
+- Blur my Shell
+- Caffeine
+- Legacy (GTK3) Theme Scheme Auto Switcher
+- Overview Navigation
+- Pixel Saver
+- Vitals
+
+For more instructions on how to get started with gnome extensions follow [this guide](https://itsfoss.com/gnome-shell-extensions/) 
