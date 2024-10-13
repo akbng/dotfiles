@@ -30,6 +30,8 @@
 9. Now export GPG_TTY to the environment variable: `export GPG_TTY=$(tty)` in the **.zshrc**  or **.bashrc**  file.
 10. Now all the commits from the terminal will be signed with gpg by default. For more info or troubleshooting see [GitHub Managing commit signature verification](https://docs.github.com/en/authentication/managing-commit-signature-verification).
 
+Also we need to setup password store with git-credential-manager and pass to clone private repositories (Authentication).
+
 ## List Gnome Extensions installed on my system
 
 - Blur my Shell
@@ -40,3 +42,13 @@
 - Vitals
 
 For more instructions on how to get started with gnome extensions follow [this guide](https://itsfoss.com/gnome-shell-extensions/) 
+
+## Samba server setup
+
+- Run `sudo apt update && sudo apt install samba`
+- Now copy the samba config in this repo to `/etc/samba/smb.conf` or create a Symlink `sudo rm /etc/samba/smb.conf && sudo ln -s $HOME/dotfiles/smb.conf /etc/samba/smb.conf`
+- Restart the smb services `sudo service smbd restart` or `sudo systemctl restart smbd`
+- Add rule for ufw to pass through the firewall - `sudo ufw allow samba`
+- Setup user accounts to authenticate - `sudo smbpasswd -a <username>` (the user should exist otherwise it won't work)
+- Now connect to the clients using the <smb://ip-address/Sambubu> and use the username and password from the previous step to authenticate
+
